@@ -1,0 +1,75 @@
+package multitask;
+
+import javax.swing.*;
+
+import multitask.Avoiding.Avoiding;
+import multitask.JumpingOver.JumpingOver;
+import multitask.TimedCatch.MovingBall;
+
+import java.awt.*;
+
+public class AllGames2 {
+
+	public JPanel createContentPane() {
+
+		JPanel totalGUI = new JPanel();
+		// setResizable(false);
+
+		// We create a JPanel with the GridLayout.
+		JPanel mainPanel = new JPanel(new GridLayout(2, 2, 0, 0));
+
+		JPanel blue = createSquareJPanel(new Avoiding(), 600);
+		JPanel green = createSquareJPanel(new JumpingOver(), 600);
+		JPanel white = createSquareJPanel(new MovingBall(), 600); 
+		JPanel purple = createSquareJPanel(new MovingBlock(), 600);
+		
+		mainPanel.add(blue); mainPanel.add(green); mainPanel.add(white);
+		mainPanel.add(purple);
+		
+		
+		
+
+		totalGUI.add(mainPanel);
+		totalGUI.setOpaque(true);
+		return totalGUI;
+	}
+	
+	private JPanel createSquareJPanel(JPanel p, int size) {
+		p.setMinimumSize(new Dimension(size, size));
+		p.setMaximumSize(new Dimension(size, size));
+		p.setPreferredSize(new Dimension(size, size));
+		return p;
+	}
+
+	private JPanel createSquareJPanel(Color color, int size) {
+		JPanel tempPanel = new JPanel();
+		tempPanel.setBackground(color);
+		tempPanel.setMinimumSize(new Dimension(size, size));
+		tempPanel.setMaximumSize(new Dimension(size, size));
+		tempPanel.setPreferredSize(new Dimension(size, size));
+		return tempPanel;
+	}
+
+	private static void createAndShowGUI() {
+
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JFrame frame = new JFrame("GridLayout");
+
+		AllGames2 demo = new AllGames2();
+		frame.setContentPane(demo.createContentPane());
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
+
+	public static void main(String[] args) {
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				createAndShowGUI();
+			}
+		});
+	}
+}

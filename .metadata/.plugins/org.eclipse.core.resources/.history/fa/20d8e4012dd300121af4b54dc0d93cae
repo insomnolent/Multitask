@@ -1,0 +1,231 @@
+package multitask;
+
+//import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+//import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
+//import java.awt.image.BufferedImage;
+//import javax.swing.ImageIcon;
+//import javax.swing.JFrame;
+import javax.swing.Timer;
+
+public class JumpingOver extends JPanel implements ActionListener, KeyListener {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	final static int high = 200;
+	Graphics2D g2, rect, rect2, rect3; //rect4, rect5; 
+	Image image;
+    private int x = 100, y = 400, finaly = 400;
+    private double vely;
+    private int rectX = 0, rectX2 = 800, rectX3 = 800; // rectX4 = 800, rectX5 = 800;
+    private int test = 0;
+    
+    final static int HEIGHT = 20;
+    int length;
+    
+    boolean inAir;
+    Timer timer;
+    Timer t = new Timer(5, this);
+    
+	
+     
+    public JumpingOver()
+    {    	
+    	setOpaque(true);
+		setBackground(new Color(204, 153, 255));
+		t.start();
+		addKeyListener(this);
+		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
+		image = Toolkit.getDefaultToolkit().getImage("halfcircle.jpg");
+		
+
+		
+		ActionListener animate = new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                repaint();
+            }
+        };
+        timer = new Timer(100,animate);
+        //timer.setDelay(100);
+        timer.start(); 
+        vely = 0;
+        inAir = false;
+    }
+    
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        
+        if(inAir)
+        	vely -= .09;
+        
+        y -= vely;
+        
+		g2 = (Graphics2D) g;
+        g.drawImage(image,x,y,null);
+    
+        
+        //this one changes how long the first length has to be
+    	if (test == 0) {
+    		//tempRect = length;
+    		length = (int) (Math.random()*7+2);
+    		length = 50*length;
+    		rectX2 = rectX +length;
+    		rectX3 = rectX2 + 150;
+    		
+    	}
+    	
+    	paintRect1(g);
+    	paintRect2(g);
+    	paintRect3(g);
+    	
+        test+=2;
+        
+        if(y < finaly)
+        	inAir = true;
+        else {
+        	y = finaly;
+        	inAir = false;
+        }
+                        
+        if (collision() == false) {
+        	System.out.print("game over");        	
+        	t.stop();
+        }
+        
+    }
+    
+    public void paintRect1(Graphics g) {
+    	//painting the first rectangle whose length can be changed
+
+    	rect = (Graphics2D) g;
+		rect.setColor(Color.black);
+		rect.fill(new Rectangle2D.Double(rectX, finaly+23, length, HEIGHT));
+        rectX-=2;
+               
+	    if (rectX == -length){
+	    	 	 rectX = 800;	     
+	    }
+
+    }
+
+    public void paintRect2(Graphics g) {
+    	//painting the space between lengths so maybe later the collision could be if (inAir == false && x == rectX2)
+    	
+    	 rect2 = (Graphics2D) g;
+	     rect2.setColor(new Color(204,153,255));
+	     rect2.fill(new Rectangle2D.Double(rectX2, finaly+23, 150, HEIGHT));
+	     rectX2-=2;
+	    	if (rectX2 == -150) {
+	    		rectX2 = rectX+length;
+	    	}
+
+    }
+    
+    public void paintRect3(Graphics g) {
+    	//painting the length of rectangle after the space because the first rectangle cannot be erased yet. 
+    	
+    	rect3 = (Graphics2D) g;
+     	rect3.setColor(Color.black);
+     	rect3.fill(new Rectangle2D.Double(rectX3, finaly+23, 650, HEIGHT));
+     	rectX3-=2;
+
+    	if (rectX3 == -650) {
+    		rectX3 = rectX+length+150;
+    		test = 0;
+    	}
+    }
+    
+    /*
+    public void paintRect4(Graphics g) {
+    	//painting the space between lengths so maybe later the collision could be if (inAir == false && x == rectX2)
+    	
+    	 rect4 = (Graphics2D) g;
+	     rect4.setColor(new Color(204,153,255));
+	     rect4.fill(new Rectangle2D.Double(rectX4, finaly+23, 150, HEIGHT));
+	     rectX4-=2;
+	    	if (rectX4 == -150) {
+	    		rectX4 = rectX+length;
+	    	}
+
+    }
+    
+    public void paintRect5(Graphics g) {
+    	//painting the length of rectangle after the space because the first rectangle cannot be erased yet. 
+    	//these rectangles will still have to be adjusted to deal with the changing lengths, the spaces, and collisions
+    	
+    	rect5 = (Graphics2D) g;
+     	rect5.setColor(Color.black);
+     	rect5.fill(new Rectangle2D.Double(rectX5, finaly+23, 650, HEIGHT));
+     	rectX5-=2;
+
+    	if (rectX5 == -650) {
+    		rectX5 = rectX+length+150;
+    		test = 0;
+    	}
+    }
+    */
+    
+    public boolean collision() {
+    	
+    	if (inAir == false && x >=rectX2 && x+12<rectX3) {
+    		// gameOver();
+    		
+    		//comment out all gameOver() because that's in the overall class
+    		
+    		t.stop();
+    		timer.stop();
+    		return false;
+    	}
+    	return true;
+		
+    }
+    
+
+	public void actionPerformed(ActionEvent e) {
+
+		repaint();
+	}
+   
+	public void keyPressed(KeyEvent e) {
+            int code = e.getKeyCode();
+            if (code == KeyEvent.VK_SPACE) {
+        		if(!inAir)
+        			vely = 5;
+            }
+            
+            
+        }
+    
+	public void keyReleased(KeyEvent e) {
+			      
+        }
+    public void keyTyped(KeyEvent e) {
+
+       }
+       
+    /*
+    public static void main(String[] args) {
+		JFrame f = new JFrame();
+		JumpingOver s = new JumpingOver();		
+		f.add(s);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(800,600);
+	}
+	*/
+}

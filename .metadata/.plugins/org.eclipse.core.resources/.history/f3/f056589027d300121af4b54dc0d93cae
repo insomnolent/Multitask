@@ -1,0 +1,22 @@
+package multitask;
+
+import javax.swing.JFrame;
+
+
+public class AllGames2Runner {
+
+	public AllGames2Runner() {
+		JFrame f = new JFrame();
+		AllGames2 s = new AllGames2();		
+		f.add(s);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(800,600);
+	}
+    
+    public static void main(String[] args) 
+	{
+		new AllGames2Runner();
+	}
+
+}

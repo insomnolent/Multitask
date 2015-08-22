@@ -1,0 +1,33 @@
+package multitask;
+
+import javax.swing.*;
+
+import multitask.Avoiding.Avoiding;
+import multitask.JumpingOver.JumpingOver;
+import multitask.MovingBlock.MovingBlock;
+import multitask.TimedCatch.SquareTimer;
+
+import java.awt.*;
+
+// jumpingover, movingblock, and avoiding work
+public class AllGames2Runner {
+
+	public AllGames2Runner() {
+		JFrame f = new JFrame();
+		AllGames2 s = new AllGames2();		
+		f.add(s.createContentPane());
+		f.add(new JumpingOver());
+		f.add(new Avoiding());
+		f.add(new SquareTimer(150, 150));
+		f.add(new MovingBlock());
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(606,628);
+	}
+    
+    public static void main(String[] args) 
+	{
+		new AllGames2Runner();
+	}
+
+}

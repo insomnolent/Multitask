@@ -1,0 +1,53 @@
+package multitask;
+
+import javax.swing.*;
+
+import multitask.Avoiding.Avoiding;
+import multitask.JumpingOver.JumpingOver;
+import multitask.MovingBlock.MovingBlock;
+import multitask.TimedCatch.SquareTimer;
+
+import java.awt.*;
+
+// jumpingover, movingblock, and avoiding work
+public class AllGames2Runner {
+
+	public AllGames2Runner() {
+		JFrame f = new JFrame();
+/**		JPanel p = new JPanel(new GridLayout(2, 2, 0, 0));
+		f.add(new JumpingOver(), 0);
+//		AllGames2 s = new AllGames2();		
+//		f.add(s.createContentPane());
+		JPanel j = new JumpingOver();
+		j.setMinimumSize(new Dimension(300, 300));
+		j.setMaximumSize(new Dimension(300, 300));
+		j.setPreferredSize(new Dimension(300, 300));
+		JPanel a = new Avoiding();
+		a.setMinimumSize(new Dimension(300, 300));
+		a.setMaximumSize(new Dimension(300, 300));
+		a.setPreferredSize(new Dimension(300, 300));
+		JPanel s = new SquareTimer(150, 450);
+		s.setMinimumSize(new Dimension(300, 300));
+		s.setMaximumSize(new Dimension(300, 300));
+		s.setPreferredSize(new Dimension(300, 300));
+		JPanel m = new MovingBlock();
+		m.setMinimumSize(new Dimension(300, 300));
+		m.setMaximumSize(new Dimension(300, 300));
+		m.setPreferredSize(new Dimension(300, 300));
+		p.add(j);
+		p.add(a);
+		p.add(s);
+		p.add(m);
+		f.add(p);
+**/		f.add(new Avoiding());
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(606,628);
+	}
+    
+    public static void main(String[] args) 
+	{
+		new AllGames2Runner();
+	}
+
+}
