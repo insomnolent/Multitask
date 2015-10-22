@@ -1,3 +1,3 @@
 # Multitask
 
-A game based off of an online game called Multitask.
+A game based on an online game called Multitask.
